@@ -83,7 +83,7 @@ body{
   align-items: flex-start;
 }
 
-.weather{
+.weather,.footer{
   display: none;
 }
 
