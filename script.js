@@ -1,5 +1,5 @@
 const apikey = "6351c0c24df319fc69dfead51b13cd3a";
-const apiUrl ="https://api.openweathermap.org/data/2.5/weather?units=metric";
+const apiUrl ="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 const searchBox = document.querySelector('.search input');
 const btn =document.querySelector('.search button');
@@ -10,22 +10,23 @@ btn.addEventListener('click',function(){
 })
 
 async function checkWeather(city){
-  const data= await fetch(apiUrl + city + `&appid=${apikey}`);
+  const response= await fetch(apiUrl + city + `&appid=${apikey}`);
 
-  if(data.status = 404){
+  if(response.status == 404){
     document.querySelector('.error').style.display = "block";
     document.querySelector('.weather').style.display = "none";
-    document.querySelector('.footer').style.display = "none";
+   
   }
   else{
 
     
-  var response= await data.jason();
+  var data= await response.json();
+  console.log(data);
 
-  document.querySelector('.city').innerHTML =response.name;
-  document.querySelector('.temp').innerHTML =Math.round(response.main.temp)+'°c';
-  document.querySelector('.humidity').innerHTML =response.main.humidity+'%';
-  document.querySelector('.wind').innerHTML =response.wind.speed+' km/h';
+  document.querySelector('.city').innerHTML =data.name;
+  document.querySelector('.temp').innerHTML =Math.round(data.main.temp)+'°c';
+  document.querySelector('.humidity').innerHTML =data.main.humidity+'%';
+  document.querySelector('.wind').innerHTML =data.wind.speed+' km/h';
   
   if(data.weather[0].main == "Clouds"){
     icon.src = "images/clouds.png";
@@ -52,7 +53,6 @@ async function checkWeather(city){
   }
   
   document.querySelector('.weather').style.display = "block";
-   document.querySelector('.footer').style.display = "block";
   document.querySelector('.error').style.display = "none";
 
   }
